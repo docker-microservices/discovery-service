@@ -6,7 +6,7 @@ on:
 
 jobs:
   package:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64] 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
 
   docker:
     needs: package
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64] 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -59,4 +59,5 @@ jobs:
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/discovery-service
           docker build -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:latest
+
 
