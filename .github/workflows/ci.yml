@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: built-jar
+          name: built-discovery
           path: target/*.jar
 
   docker:
@@ -51,13 +51,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: built-jar
+          name: built-discovery
 
       - name: Build & Push Docker image
         run: |
           JAR_FILE=$(ls *.jar | head -n 1)
-          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/discovery-service
+          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/discovery
           docker build -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:latest
-
-
