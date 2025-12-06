@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devops.microservices.discovery</groupId>
-	<artifactId>com-devops-microservices-docker</artifactId>
+	<artifactId>com-devops-microservices-discovery</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>com-devops-microservices-docker</name>
+	<name>com-devops-microservices-discovery</name>
 	<description>Spring Boot Discovery Server</description>
 	<url />
 	<licenses>
