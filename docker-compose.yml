@@ -1,0 +1,7 @@
+services:
+    discovery: 
+        image: khawlarouiss/discovery:latest
+        container_name: discovery
+        ports:
+            - "8761:8761"
+        restart: always   
