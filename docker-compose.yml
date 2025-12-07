@@ -1,6 +1,6 @@
 services:
     discovery: 
-        image: khawlarouiss/discovery:latest
+        image: khawlarouiss/docker-microservices:discovery
         container_name: discovery
         ports:
             - "8761:8761"
