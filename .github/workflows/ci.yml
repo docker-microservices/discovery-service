@@ -26,14 +26,10 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Maven Package
-        run: |
-            mvn clean package --no-transfer-progress
-      
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: built-discovery
-          path: target/*.jar
+        run: mvn clean package --no-transfer-progress
+
+      - name: Copy artifact locally
+        run: cp target/*.jar /tmp/built-discovery.jar
 
   docker:
     needs: package
@@ -48,14 +44,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: built-discovery
+      - name: Copy artifact from package job
+        run: cp /tmp/built-discovery.jar .
 
       - name: Build & Push Docker image
         run: |
-          JAR_FILE=$(ls *.jar | head -n 1)
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/discovery
           docker build -t $IMAGE_NAME:latest .
           docker push $IMAGE_NAME:latest
