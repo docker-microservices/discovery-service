@@ -54,6 +54,7 @@ jobs:
           docker push $IMAGE_NAME
 
   deploy:
+    needs: docker  
     runs-on: self-hosted
     steps:
       - name: Checkout repository
@@ -91,4 +92,5 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
             docker-compose -f ~/devops-ci-cd-github-actions/docker-compose.yml down
             docker-compose -f ~/devops-ci-cd-github-actions/docker-compose.yml up -d
+
 
