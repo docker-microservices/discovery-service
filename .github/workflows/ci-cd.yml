@@ -45,12 +45,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Copy artifact from package job
-        run: cp /tmp/discovery.jar ./target/discovery.jar
+        run: cp /tmp/discovery.jar ./discovery.jar
 
       - name: Build & Push Docker image
         run: |
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
-          docker build --build-arg JAR_FILE=target/discovery.jar -t $IMAGE_NAME .
+          docker build --build-arg JAR_FILE=discovery.jar -t $IMAGE_NAME .
           docker push $IMAGE_NAME
 
   deploy:
