@@ -50,7 +50,7 @@ jobs:
       - name: Build & Push Docker image
         run: |
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
-          docker build --build-arg JAR_FILE=discovery.jar -t $IMAGE_NAME .
+          docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
 
   deploy:
