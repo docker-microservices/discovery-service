@@ -90,7 +90,8 @@ jobs:
           script: | 
             DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
-            docker-compose -f ~/devops-ci-cd-github-actions/docker-compose.yml down
-            docker-compose -f ~/devops-ci-cd-github-actions/docker-compose.yml up -d
+            docker-compose -f ~/docker-microservices/discovery/docker-compose.yml down
+            docker-compose -f ~/docker-microservices/discovery/docker-compose.yml up -d
+
 
 
