@@ -29,7 +29,7 @@ jobs:
         run: mvn clean package --no-transfer-progress
 
       - name: Copy artifact locally
-        run: cp target/*.jar /tmp/built-discovery.jar
+        run: cp target/*.jar /tmp/discovery.jar
 
   docker:
     needs: package
@@ -45,12 +45,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Copy artifact from package job
-        run: cp /tmp/built-discovery.jar .
+        run: cp /tmp/discovery.jar ./target/discovery.jar
 
       - name: Build & Push Docker image
         run: |
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
-          docker build -t $IMAGE_NAME .
+          docker build --build-arg JAR_FILE=target/discovery.jar -t $IMAGE_NAME .
           docker push $IMAGE_NAME
 
   deploy:
