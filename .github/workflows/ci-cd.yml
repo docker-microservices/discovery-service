@@ -69,7 +69,8 @@ jobs:
           port: ${{ secrets.PROD_PORT }}
           script: |
             mkdir -p ~/docker-microservices/discovery
-            
+            echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > ~/docker-microservices/discovery/.env
+  
       - name: Copy docker-compose to VM
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -88,10 +89,8 @@ jobs:
           key: ${{ secrets.PROD_SSH_KEY }}
           port: ${{ secrets.PROD_PORT }}
           script: | 
-            DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
-            docker-compose -f ~/docker-microservices/discovery/docker-compose.yml down
-            docker-compose -f ~/docker-microservices/discovery/docker-compose.yml up -d
-
-
+            cd ~/docker-microservices/discovery
+            docker pull ${DOCKER_USERNAME}/docker-microservices:discovery
+            docker-compose down
+            docker-compose up -d
 
