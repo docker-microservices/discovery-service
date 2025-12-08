@@ -1,5 +1,4 @@
 FROM eclipse-temurin:17-jdk-jammy
-ARG JAR_FILE=*.jar
-COPY ${JAR_FILE} app.jar
+COPY discovery.jar app.jar
 ENTRYPOINT ["java","-Dspring.profiles.active=prod","-jar","/app.jar"]
 EXPOSE 8761
