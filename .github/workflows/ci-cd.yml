@@ -28,6 +28,13 @@ jobs:
       - name: Maven Package
         run: mvn clean package --no-transfer-progress
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-jar
+          path: target/*.jar
+
+
   docker:
     needs: package
     runs-on: self-hosted
@@ -41,12 +48,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: discovery-jar
+          
       - name: Verify JAR
-        run: ls -lh target/*.jar
+        run: ls -lh *.jar
 
       - name: Build & Push Docker image
         run: |
-          JAR_FILE=$(ls target/*.jar | head -n 1)
+          JAR_FILE=$(ls *.jar | head -n 1)
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/docker-microservices:discovery
           docker build --build-arg JAR_FILE=$JAR_FILE -t $IMAGE_NAME .
           docker push $IMAGE_NAME
@@ -91,5 +103,3 @@ jobs:
             docker pull ${DOCKER_USERNAME}/docker-microservices:discovery
             docker-compose down
             docker-compose up -d
-
-
