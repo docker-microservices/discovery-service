@@ -78,6 +78,6 @@ jobs:
           port: ${{ secrets.PROD_PORT }}
           script: | 
             cd ~/docker-microservices/discovery
-            docker pull ${DOCKER_USERNAME}/discovery:latest
+            docker-compose pull
             docker-compose down
             docker-compose up -d
