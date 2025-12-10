@@ -1,6 +1,6 @@
 services:
     discovery: 
-        image: "${DOCKER_USERNAME}/docker-microservices:discovery"
+        image: "${DOCKER_USERNAME}/discovery:latest"
         container_name: discovery
         ports:
             - "8761:8761"
