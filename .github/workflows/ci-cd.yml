@@ -79,6 +79,9 @@ jobs:
           script: | 
             cd ~/docker-microservices/discovery
             docker stack deploy -c docker-compose.yml discovery
+            docker stack deploy --env-file ~/docker-microservices/discovery/.env -c docker-compose.yml discovery
+
+
 
 
 
