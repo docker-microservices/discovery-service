@@ -4,4 +4,13 @@ services:
         container_name: discovery
         ports:
             - "8761:8761"
-        restart: always   
+    networks:
+      - docker-ms
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+networks:
+  docker-ms:
+    external: true
