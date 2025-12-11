@@ -7,10 +7,11 @@ services:
     networks:
       - docker-ms
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
 
 networks:
   docker-ms:
     external: true
+
