@@ -17,14 +17,14 @@ jobs:
           java-version: 17
           distribution: temurin
             
-      - name: Cache Maven package
+      - name: Cache Maven packages for Discovery Service
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ github.repository }}-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ github.repository }}-discovery-service
           restore-keys: |
-            ${{ runner.os }}-maven-${{ github.repository }}-
-
+            ${{ runner.os }}-maven-${{ github.repository }}-discovery-service-
+      
       - name: Maven Package
         run: mvn clean package --no-transfer-progress
 
@@ -57,7 +57,6 @@ jobs:
           port: ${{ secrets.PROD_PORT }}
           script: |
             mkdir -p ~/docker-microservices/discovery
-            echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > ~/docker-microservices/discovery/.env
   
       - name: Copy docker-compose to VM
         uses: appleboy/scp-action@v0.1.7
@@ -78,8 +77,8 @@ jobs:
           port: ${{ secrets.PROD_PORT }}
           script: | 
             cd ~/docker-microservices/discovery
+            sed -i "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" docker-compose.yml
             docker stack deploy -c docker-compose.yml discovery
-            docker stack deploy --env-file ~/docker-microservices/discovery/.env -c docker-compose.yml discovery
 
 
 
