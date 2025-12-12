@@ -11,7 +11,11 @@ services:
           replicas: 1
           restart_policy:
             condition: on-failure
+          placement:
+            constraints:
+              - node.labels.role == gateway
 
 networks:
   docker-ms:
     external: true
+
