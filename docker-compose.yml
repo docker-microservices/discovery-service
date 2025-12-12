@@ -1,6 +1,6 @@
 services:
     discovery: 
-        image: "${DOCKER_USERNAME}/discovery:latest"
+        image: "${DOCKER_USERNAME}/discovery:${GITHUB_SHA}"
         ports:
             - "8761:8761"
         networks:
